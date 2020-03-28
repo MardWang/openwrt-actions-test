@@ -49,11 +49,11 @@ jobs:
 
     - name: Costom configure file
       run: |
-          chmod +x custom_configure/newifid2/newifid2-configure.sh
+          chmod +x custom_configure/lienol/newifid2-configure.sh
           cd openwrt
           rm -f .config
-          cp ../custom_configure/newifid2/newifid2-1907 .config
-          ../custom_configure/newifid2/newifid2-configure.sh
+          cp ../custom_configure/lienol/newifid2-dev-1907 .config
+          ../custom_configure/lienol/newifid2-configure.sh
           
     - name: Make Defconfig
       run: |
