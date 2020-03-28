@@ -11,7 +11,7 @@ name: Build Lienol's OpenWrt (dev-1907) for NewifiD2
 
 on:
   schedule:
-    - cron: 0 8 * * 7
+    - cron: 0 20 * * 6
 #  push:
 #    branches: 
 #      - master
