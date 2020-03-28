@@ -12,9 +12,9 @@ name: Build OpenWrt(lienol dev-1907) for newifi-d2
 on:
   schedule:
     - cron: 0 20 * * 6
-#  push:
-#    branches: 
-#      - master
+  push:
+    branches: 
+      - master
 
 jobs:
   build:
@@ -49,7 +49,7 @@ jobs:
 
     - name: Costom configure file
       run: |
-          chmod +x modify_files/newifi-d2-general.sh
+          chmod +x modify_settings/lienol/newifi-d2-general.sh
           cd openwrt
           rm -f .config
           cp ../configuraions/lienol/newifid2-dev-1907 .config
