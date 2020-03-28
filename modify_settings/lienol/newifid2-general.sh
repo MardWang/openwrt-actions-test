@@ -1,6 +1,6 @@
 #!/bin/bash
 # Modify default IP
-sed -i 's/192.168.1.1/192.168.220.6/g' package/base-files/files/bin/config_generate
+sed -i 's/192.168.1.1/192.168.220.99/g' package/base-files/files/bin/config_generate
 # Modify SSH Key
 sed -i 's/root::0:0/root:$1$fWgySbK2$CG12khZ5cp4fuwrwiC5Tn1:18336:0/g' package/base-files/files/etc/shadow
 # Modify host name
