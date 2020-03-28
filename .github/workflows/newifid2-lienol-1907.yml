@@ -7,14 +7,14 @@
 # Modified by: Mardeson
 # Blog: https://mardeson.wang
 #=================================================
-name: Build OpenWrt(lienol dev-1907) for newifi-d2
+name: Build Lienol's OpenWrt (dev-1907) for NewifiD2
 
 on:
   schedule:
-    - cron: 0 20 * * 6
-  push:
-    branches: 
-      - master
+    - cron: 0 8 * * 7
+#  push:
+#    branches: 
+#      - master
 
 jobs:
   build:
@@ -49,11 +49,11 @@ jobs:
 
     - name: Costom configure file
       run: |
-          chmod +x modify_settings/lienol/newifid2-general.sh
+          chmod +x custom_configure/newifid2/newifid2-configure.sh
           cd openwrt
           rm -f .config
-          cp ../configuraions/lienol/newifid2-dev-1907 .config
-          ../modify_settings/lienol/newifid2-general.sh
+          cp ../custom_configure/newifid2/newifid2-1907 .config
+          ../custom_configure/newifid2/newifid2-configure.sh
           
     - name: Make Defconfig
       run: |
