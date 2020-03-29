@@ -85,9 +85,7 @@ jobs:
           mv openwrt/bin/targets/ramips/mt7620 ./output-files
 
     - name: Upload firmware
-      env:
-        DATE_TODAY: $(date "+%y%m%d")
       uses: actions/upload-artifact@master
       with:
-        name: $DATE_TODAY_OpenWrt-self-build-Lienol-1907_KSG1218-K2a
+        name: $(date "+%y%m%d")_OpenWrt-self-build-Lienol-1907_KSG1218-K2a
         path: ./output-files/
