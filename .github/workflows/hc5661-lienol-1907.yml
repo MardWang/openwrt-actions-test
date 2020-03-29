@@ -87,5 +87,5 @@ jobs:
     - name: Upload firmware
       uses: actions/upload-artifact@master
       with:
-        name: OpenWrt-Self-Build-Lienol-1907_HC5661
+        name: OpenWrt-self-build-Lienol-1907_HC5661
         path: ./output-files/
