@@ -10,7 +10,7 @@
 name: Build Lienol's OpenWrt (dev-1907) for HC5661
 
 on:
-#  schedule:
+  schedule:
     - cron: 0 20 * * 6
 #  push:
 #    branches: 
