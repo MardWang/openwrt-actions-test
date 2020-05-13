@@ -1,0 +1,91 @@
+#=================================================
+# Origin: https://github.com/P3TERX/Actions-OpenWrt
+# Author: P3TERX
+# Blog: https://p3terx.com
+# Lisence: MIT
+# Description: Build OpenWrt using GitHub Actions
+# Modified by: Mardeson
+# Blog: https://mardeson.wang
+#=================================================
+name: Build Lienol's OpenWrt (dev-1907) for N1
+
+on:
+#  schedule:
+#    - cron: 0 20 * * 6
+  push:
+    branches: 
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Initialization environment
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+          sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d
+          sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
+          sudo -E apt-get -qq update
+          sudo -E apt-get -qq install build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint device-tree-compiler
+          sudo ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+          sudo -E apt-get -y autoremove --purge
+          sudo -E apt-get clean
+
+    - name: Clone source code
+      env: 
+        REPO_URL: https://github.com/Lienol/openwrt
+        REPO_BRANCH: dev-19.07
+      run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
+
+    - name: Update feeds
+      run: cd openwrt && ./scripts/feeds update -a
+
+    - name: Install feeds
+      run: cd openwrt && ./scripts/feeds install -a
+
+    - name: Costom configure file
+      run: |
+          chmod +x custom_configure/lienol/n1-configure.sh
+          cd openwrt
+          rm -f .config
+          cp ../custom_configure/lienol/n1-1907 .config
+          ../custom_configure/lienol/n1-configure.sh
+          
+    - name: Make Defconfig
+      run: |
+          cd openwrt
+          make defconfig
+
+    - name: Make download
+      run: |
+          cd openwrt
+          make download -j8
+          find dl -size -1024c -exec ls -l {} \;
+          find dl -size -1024c -exec rm -f {} \;
+
+    - name: Multi-thread compile
+      run: |
+          cd openwrt
+          echo -e "$(nproc) thread build."
+          make -j$(nproc) V=s
+
+    - name: Single-thread compile
+      if: failure()
+      run: |
+          cd openwrt
+          make -j1 V=s
+
+    - name: Organize files
+      run: |
+          rm -rf ./output-files/
+          mv openwrt/bin/targets ./output-files
+
+    - name: Upload firmware
+      uses: actions/upload-artifact@master
+      with:
+        name: $(date "+%y%m%d")_OpenWrt-self-build-Lienol-1907_N1
+        path: ./output-files/
