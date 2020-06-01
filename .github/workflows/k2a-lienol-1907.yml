@@ -12,9 +12,9 @@ name: Build Lienol's OpenWrt (dev-1907) for PSG1218-K2a
 on:
 #  schedule:
 #    - cron: 0 20 * * 6
-#  push:
-#    branches: 
-#      - master
+  push:
+    branches: 
+      - master
 
 jobs:
   build:
