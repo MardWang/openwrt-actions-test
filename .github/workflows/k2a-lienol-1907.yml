@@ -36,7 +36,7 @@ jobs:
           sudo -E apt-get clean
 
     - name: Clone source code
-      env: 
+      env:
         REPO_URL: https://github.com/Lienol/openwrt
         REPO_BRANCH: dev-19.07
       run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
@@ -86,6 +86,8 @@ jobs:
 
     - name: Upload firmware
       uses: actions/upload-artifact@master
+      env: 
+        datetoday: $(date "+%y%m%d")
       with:
-        name: (date "+%y%m%d")_OpenWrt-self-build-Lienol-1907_KSG1218-K2a
+        name: ${{ env.datetoday }}_OpenWrt-self-build-Lienol-1907_KSG1218-K2a
         path: ./output-files/
