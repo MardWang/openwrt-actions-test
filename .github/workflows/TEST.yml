@@ -30,12 +30,12 @@ jobs:
       run: |
           git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
           echo $(date +%y%m%d)_OpenWrt-self-build-Lienol-1907_KSG1218-K2a > name.txt
-          tail name.txt
+          fname=$(date +%y%m%d)
 
     - name: Upload Artifact
       env: 
-        FNAME: =$(date +%y%m%d)
+        FNAME1: =$(date +%y%m%d)
       uses: actions/upload-artifact@master
       with:
-        name: ${{ env.FNAME }}
+        name: $fname
         path: ./openwrt
