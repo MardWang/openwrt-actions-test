@@ -34,9 +34,7 @@ jobs:
           echo $fname
 
     - name: Upload Artifact
-      env: 
-        FNAME1: $(date +%y%m%d)
       uses: actions/upload-artifact@master
       with:
-        name: 123
+        name: ${{ fname }}
         path: ./openwrt/config
