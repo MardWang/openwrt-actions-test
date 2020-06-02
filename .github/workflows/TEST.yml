@@ -38,5 +38,5 @@ jobs:
         ffname: $fname
       uses: actions/upload-artifact@master
       with:
-        name: ${{ ffname }}
+        name: ${{ env.ffname }}
         path: ./openwrt/config
