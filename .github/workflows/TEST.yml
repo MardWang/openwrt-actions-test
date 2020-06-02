@@ -27,6 +27,7 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
+          echo $(date +%y%m%d)_OpenWrt-self-build-Lienol-1907_KSG1218-K2a > name.txt
           sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d
           sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
           sudo -E apt-get -qq update
@@ -42,8 +43,7 @@ jobs:
       run: git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
 
     - name: Upload Artifact
-      run: echo $(date +%y%m%d)_OpenWrt-self-build-Lienol-1907_KSG1218-K2a > name.txt
       uses: actions/upload-artifact@master
       with:
-        name: 'name.txt'
+        name: name.txt
         path: ./openwrt
