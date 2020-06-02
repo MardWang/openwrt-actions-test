@@ -86,8 +86,6 @@ jobs:
 
     - name: Upload firmware
       uses: actions/upload-artifact@master
-      env: 
-        datetoday: ${{ date "+%y%m%d" }}
       with:
-        name: ${{ env.datetoday }}_OpenWrt-self-build-Lienol-1907_KSG1218-K2a
+        name: ${{ date "+%y%m%d" }}_OpenWrt-self-build-Lienol-1907_KSG1218-K2a
         path: ./output-files/
