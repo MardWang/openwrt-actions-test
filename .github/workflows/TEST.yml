@@ -10,11 +10,11 @@
 name: TEST
 
 on:
-#  schedule:
-#    - cron: 0 20 * * 6
-  push:
-    branches: 
-      - master
+  schedule:
+    - cron: 0 20 * * 6
+#  push:
+#    branches: 
+#      - master
 
 jobs:
   build:
@@ -26,7 +26,7 @@ jobs:
     - name: Clone source code
       env:
         REPO_URL: https://github.com/Lienol/openwrt
-        REPO_BRANCH: dev-19.07
+        REPO_BRANCH: 19.07
       run: |
           git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
           echo $(date +%y%m%d)_OpenWrt-self-build-Lienol-1907_KSG1218-K2a > name.txt
@@ -36,5 +36,5 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@master
       with:
-        name: "`r format(Sys.time(), %y%m%d')`"_OpenWrt-self-build-Lienol-1907_KSG1218-K2a
+        name: OpenWrt-self-build-Lienol-1907_KSG1218-K2a
         path: ./openwrt/config
